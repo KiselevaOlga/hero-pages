@@ -1,19 +1,19 @@
 import {
+  Alert,
   Box,
   Button,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Snackbar,
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import { Formik, FormikHelpers, Form, Field } from "formik";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FormTextField } from "../components/FormTextField";
 import { HeroCard } from "../components/HeroCard";
+import { NewHeroForm } from "../components/NewHeroForm";
 import { useFetchList } from "../components/UseFetch";
 
 export interface HeroResponse {
@@ -34,12 +34,21 @@ export interface CreateHero {
 
 export const Heroes = () => {
   const [open, setOpen] = useState<boolean>(false);
+  const [showSnackbar, setShowSnackBar] = useState<null | "error" | "success">(
+    null
+  );
   const [response, isError, isLoading, refetch] = useFetchList("heroes");
 
   const onAddNewHero = async (hero: CreateHero) => {
-    return await axios
-      .post("/heroes", { ...hero })
-      .then(() => refetch({}))
+    return await axios.post("/heroes", { ...hero }).then((res) => {
+      if (res.data.id) {
+          setOpen(!open);
+        refetch({});
+        setShowSnackBar("success");
+      } else {
+        setShowSnackBar("error");
+      }
+    });
   };
   return (
     <Box>
@@ -73,7 +82,8 @@ export const Heroes = () => {
               gap: 3,
               alignItems: "center",
               justifyContent: "center",
-              marginTop: 3,
+              p: 3,
+              flexWrap: "wrap"
             }}
           >
             <Typography variant="h6">
@@ -95,7 +105,7 @@ export const Heroes = () => {
         </Box>
 
         <img
-            alt={'Comic heroes'}
+          alt={"Comic heroes"}
           src={"images/comicHeroes.jpg"}
           style={{
             maxHeight: "30rem",
@@ -111,19 +121,20 @@ export const Heroes = () => {
           padding: 3,
           display: "grid",
           gap: 3,
-          gridTemplateColumns:
-            "repeat(auto-fit,minmax(calc((100% - (24px * 5)) / 5),1fr))",
+          gridTemplateColumns:{ 
+            lg: "repeat(auto-fit,minmax(calc((100% - (24px * 5)) / 5),1fr))",
+            sm: "repeat(3, 1fr)",
+          }
         }}
       >
         {isError && (
           <Typography variant="body1">
             Oops, something went wrong, please reload the page
           </Typography>
-        ) } 
-        {isLoading && (
-          <Typography variant="body1">Loading ... </Typography>
         )}
-        { response && response.map((item: HeroResponse) => (
+        {isLoading && <Typography variant="body1">Loading ... </Typography>}
+        {response &&
+          response.map((item: HeroResponse) => (
             <Link
               to={`${item.id}`}
               key={item.id}
@@ -134,8 +145,7 @@ export const Heroes = () => {
                 randomNum={Math.floor(Math.random() * 10) + 1}
               />
             </Link>
-          ))
-        }
+          ))}
       </Box>
 
       <Dialog open={open} sx={{ borderRadius: 3 }}>
@@ -154,68 +164,26 @@ export const Heroes = () => {
           }}
         >
           <DialogContentText>
-            Please provide name, short description of your hero, description
+            Please provide name, short description (1-2 sentences),
+            description(longer and detailed) and power of your owm hero
           </DialogContentText>
-          <Box>
-            <Formik
-              initialValues={{
-                name: "",
-                shortDescription: "",
-                description: "",
-                power: "",
-              }}
-              onSubmit={(
-                values: CreateHero,
-                { setSubmitting }: FormikHelpers<CreateHero>
-              ) => {
-                onAddNewHero(values);
-                setSubmitting(false);
-                setOpen(!open);
-              }}
-            >
-              <Form>
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                  <Field
-                    label="Name"
-                    variant="standard"
-                    name="name"
-                    component={FormTextField}
-                  />
-                  <Field
-                    label="Short description"
-                    variant="standard"
-                    name="shortDescription"
-                    component={FormTextField}
-                  />
-                  <Field
-                    label="Description"
-                    variant="standard"
-                    name="description"
-                    component={FormTextField}
-                  />{" "}
-                  <Field
-                    label="Power"
-                    variant="standard"
-                    name="power"
-                    component={FormTextField}
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: 3,
-                    justifyContent: "flex-end",
-                    width: "100%",
-                  }}
-                >
-                  <Button onClick={() => setOpen(!open)}>Cancel</Button>
-                  <Button type="submit">Submit</Button>
-                </Box>
-              </Form>
-            </Formik>
-          </Box>
+          <NewHeroForm onSubmit={onAddNewHero} onCancel={()=>setOpen(!open)} />
         </DialogContent>
       </Dialog>
+      <Snackbar
+        open={!!showSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setShowSnackBar(null)}
+      >
+          <Alert
+            onClose={() => setShowSnackBar(null)}
+            severity={showSnackbar === 'success' ? 'success' : 'error'}
+            sx={{ width: "100%" }}
+          >
+            {showSnackbar === 'success' ? 'New super hero has been added!' : 'Something went wrong, please try again later!'}
+          </Alert>
+
+      </Snackbar>
     </Box>
   );
 };

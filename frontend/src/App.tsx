@@ -1,22 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import {
-  AppBar,
   Box,
-  Button,
   ThemeProvider,
-  Toolbar,
   Typography,
-  useTheme,
 } from "@mui/material";
-import axios from "axios";
 import {
-  BrowserRouter,
-  Link,
   Navigate,
   Outlet,
   Route,
   Routes,
-  useNavigate,
 } from "react-router-dom";
 import { theme } from "./theme";
 import { Hero } from "./routes/hero";
@@ -98,7 +90,7 @@ interface NavigationProps {
 export const Navigation = ({ isActive }: NavigationProps): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
-      <AppBar component={"nav"}>
+      {/* <AppBar component={"nav"}>
         <Toolbar sx={{ background: (theme) => theme.palette.primary.main }}>
           {!isActive ? (
             <Link to="/login">
@@ -109,10 +101,10 @@ export const Navigation = ({ isActive }: NavigationProps): JSX.Element => {
           )}
         </Toolbar>
       </AppBar>
-      <Toolbar />
+      <Toolbar /> */}
 
       <Box component={"main"} sx={{ 
-        minHeight: 'calc(100vh - (64px + 100px))',
+        minHeight: 'calc(100vh - (100px))',
         display: 'flex',
         flexDirection: 'column',
         '& > *':{

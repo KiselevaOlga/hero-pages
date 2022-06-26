@@ -1,8 +1,5 @@
-import { Typography, Box, TextField, Button } from "@mui/material";
-import axios from "axios";
-import { theme } from "../theme";
+import { Typography, Box, Button } from "@mui/material";
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { useEffect, useState } from "react";
 import { User } from "../App";
 import { FormTextField } from "../components/FormTextField";
 
@@ -10,7 +7,6 @@ interface LoginPageProps {
   onLogin: (loginValues: User) => Promise<void>;
 }
 export const Login = ({ onLogin }: LoginPageProps): JSX.Element => {
-    const [submitting, setSubmitting] = useState<boolean>(true)
   return (
     <Box
       sx={{
@@ -31,7 +27,7 @@ export const Login = ({ onLogin }: LoginPageProps): JSX.Element => {
           color: theme => theme.palette.primary.main
         }}
       >
-        <Typography variant="body1" align='center'>Hello There!</Typography>
+        <Typography variant="h6" align='center'>Hello There!</Typography>
         <Typography variant="body1" align='center'>To use this application, please login first</Typography>
 
         <Formik

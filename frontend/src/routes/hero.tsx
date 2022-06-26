@@ -5,19 +5,18 @@ import {
   DialogContentText,
   DialogTitle,
   Grid,
-  Skeleton,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useRef, useState } from "react";
+import {  useNavigate, useParams } from "react-router-dom";
 import { useFetchObject } from "../components/UseFetch";
-import { HeroResponse } from "./heroes";
 
 export const Hero = () => {
   let params = useParams();
   let navigate = useNavigate();
+  const imageNum = useRef(Math.floor(Math.random() * 10) + 1)
   const [open, setOpen] = useState<boolean>(false);
   const [response, isError, isLoading] = useFetchObject(`heroes/${params.id}`);
 
@@ -36,6 +35,7 @@ export const Hero = () => {
         </Typography>
       )}
       {isLoading && <Typography variant="body1">Loading ... </Typography>}
+
       {response && (
         <Box>
           <Box
@@ -63,7 +63,7 @@ export const Hero = () => {
               <img
                 alt={response.name}
                 src={`../images/random/random${
-                  Math.floor(Math.random() * 10) + 1
+                  imageNum.current
                 }.jpg`}
                 style={{
                   objectFit: "cover",
@@ -92,10 +92,19 @@ export const Hero = () => {
               </Typography>
             </Box>
           </Box>
-          <Grid container spacing={3} sx={{p: 3}}>
+          <Grid container spacing={3} sx={{ p: 3 }}>
             <Grid item xs={4}>
               <Box>
-                <Typography variant="h5" sx={{ textTransform: "uppercase", borderBottom: '2px solid black', pb: 1, pt: 1 , mb: 3}}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    textTransform: "uppercase",
+                    borderBottom: "2px solid black",
+                    pb: 1,
+                    pt: 1,
+                    mb: 3,
+                  }}
+                >
                   Power
                 </Typography>
                 <Typography variant="body1">{response.power}</Typography>
@@ -103,7 +112,16 @@ export const Hero = () => {
             </Grid>
             <Grid item xs={8}>
               <Box>
-                <Typography variant="h5" sx={{ textTransform: "uppercase", borderBottom: '2px solid black', pb: 1, pt: 1,mb: 3 }}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    textTransform: "uppercase",
+                    borderBottom: "2px solid black",
+                    pb: 1,
+                    pt: 1,
+                    mb: 3,
+                  }}
+                >
                   Description
                 </Typography>
                 <Typography variant="body1">{response.description}</Typography>
