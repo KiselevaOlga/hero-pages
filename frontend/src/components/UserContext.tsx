@@ -18,7 +18,7 @@ export const UserContext = createContext<ContextProps | null>(null);
 export const useAuth = () =>{
     const navigate = useNavigate();
     const context = useContext(UserContext)
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<null | string>(null);
     
     const setUserContext = async () => {
         return await axios.get('/users').then(res => {         
@@ -58,7 +58,7 @@ export const useFindUser =()=> {
             setUser(res.data[0]);
             setLoading(false);
         }).catch(err => {
-            //console.log(err);
+            console.log(err);
             setLoading(false);
         });
         }

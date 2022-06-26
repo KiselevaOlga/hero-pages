@@ -1,23 +1,24 @@
-import { Typography, Box, Button } from "@mui/material";
+import { Typography, Box, Button, Alert } from "@mui/material";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { User } from "../App";
 import { FormTextField } from "../components/FormTextField";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
 interface LoginPageProps {
   onLogin: (loginValues: User) => Promise<void>;
+  error?: string | null;
 }
-export const Login = ({ onLogin }: LoginPageProps): JSX.Element => {
-    const LoginSchema = Yup.object().shape({
-        name: Yup.string()
-          .min(2, 'Too Short!')
-          .max(4, 'Too Long!')
-          .required('Required'),
-        password: Yup.string()
-          .min(2, 'Too Short!')
-          .max(4, 'Too Long!')
-          .required('Required'),
-      });
+export const Login = ({ onLogin, error }: LoginPageProps): JSX.Element => {
+  const LoginSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(2, "Too Short!")
+      .max(4, "Too Long!")
+      .required("Required"),
+    password: Yup.string()
+      .min(2, "Too Short!")
+      .max(4, "Too Long!")
+      .required("Required"),
+  });
   return (
     <Box
       sx={{
@@ -35,11 +36,15 @@ export const Login = ({ onLogin }: LoginPageProps): JSX.Element => {
           padding: 3,
           background: (theme) => theme.palette.primary.light,
           borderRadius: 3,
-          color: theme => theme.palette.primary.main
+          color: (theme) => theme.palette.primary.main,
         }}
       >
-        <Typography variant="h6" align='center'>Hello There!</Typography>
-        <Typography variant="body1" align='center'>To use this application, please login first</Typography>
+        <Typography variant="h6" align="center">
+          Hello There!
+        </Typography>
+        <Typography variant="body1" align="center">
+          To use this application, please login first
+        </Typography>
 
         <Formik
           initialValues={{
@@ -68,15 +73,17 @@ export const Login = ({ onLogin }: LoginPageProps): JSX.Element => {
                 type="password"
                 component={FormTextField}
               />
-
+              {!!error && (
+                <Alert severity="error" variant='filled'>Name or password is incorrect</Alert>
+              )}
               <Button
                 type="submit"
                 sx={{
                   background: (theme) => theme.palette.secondary.main,
                   color: (theme) => theme.palette.secondary.contrastText,
-                  '&:hover':{
+                  "&:hover": {
                     background: (theme) => theme.palette.secondary.dark,
-                  }
+                  },
                 }}
               >
                 Submit

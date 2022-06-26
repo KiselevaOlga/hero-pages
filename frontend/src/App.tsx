@@ -46,7 +46,7 @@ function App() {
               <Route path="heroes/:id" element={<Hero />} />
             </Route>
 
-            <Route path="login" element={<Login onLogin={loginUser} />} />
+            <Route path="login" element={<Login onLogin={loginUser} error={error} />} />
             <Route
               path="*"
               element={

@@ -23,6 +23,9 @@ export const theme = createTheme({
     warning: {
       main: "#fa9e13",
     },
+    error: {
+        main: "#eb4f54",
+    }
   },
 });
 

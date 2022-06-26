@@ -25,7 +25,7 @@ export const Hero = () => {
       if (res.data.length === 0) {
         navigate("/heroes");
       }
-    });
+    }).catch(err => console.log('Error: ', err));
   };
   return (
     <Box>

@@ -48,7 +48,7 @@ export const Heroes = () => {
       } else {
         setShowSnackBar("error");
       }
-    });
+    }).catch((err) => {console.log('Error: ', err)});
   };
   return (
     <Box>
@@ -181,6 +181,7 @@ export const Heroes = () => {
         <Alert
           onClose={() => setShowSnackBar(null)}
           severity={showSnackbar === "success" ? "success" : "error"}
+          variant='filled'
           sx={{ width: "100%" }}
         >
           {showSnackbar === "success"
