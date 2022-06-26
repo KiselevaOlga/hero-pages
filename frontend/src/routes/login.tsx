@@ -32,7 +32,7 @@ export const Login = ({ onLogin }: LoginPageProps): JSX.Element => {
         }}
       >
         <Typography variant="body1" align='center'>Hello There!</Typography>
-        <Typography variant="body1" align='center'>To use this application, please, login first</Typography>
+        <Typography variant="body1" align='center'>To use this application, please login first</Typography>
 
         <Formik
           initialValues={{

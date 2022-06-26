@@ -22,7 +22,7 @@ import { theme } from "./theme";
 import { Hero } from "./routes/hero";
 import { Heroes } from "./routes/heroes";
 import { Login } from "./routes/login";
-import { useAuth, useFindUser, UserContext } from "./UserContext";
+import { useAuth, useFindUser, UserContext } from "./components/UserContext";
 
 export const useCheckUser = () => {
   const [user, setUser] = useState(null);
@@ -41,7 +41,6 @@ export interface User {
 function App() {
   const { loginUser, error } = useAuth();
   const { user, setUser, isLoading } = useFindUser();
-
   return (
     <UserContext.Provider value={{ user, setUser, isLoading }}>
       <Box>
@@ -87,7 +86,7 @@ const LoginRequiredRoute: React.FC<LoginRequiredRouteProps> = (
   children
 ) => {
   if (!userIsActive) {
-    return <Navigate to={redirectPath} />;
+   return <Navigate to={redirectPath} />;
   }
   return <Outlet />;
 };

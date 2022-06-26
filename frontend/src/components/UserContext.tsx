@@ -42,7 +42,7 @@ export const useAuth = () =>{
     
     return {
         loginUser,
-        error
+        error,
     }
 }
 
@@ -52,7 +52,7 @@ export const useFindUser =()=> {
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() =>{
-        async function findUser() {
+        const findUser = async ()=> {
         await axios.get('/users')
         .then(res => {
             setUser(res.data[0]);

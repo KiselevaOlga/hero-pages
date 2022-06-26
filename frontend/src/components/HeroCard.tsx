@@ -18,6 +18,7 @@ export const HeroCard = ({
         flex: 1,
         justifyContent: "center",
         height: "100%",
+        minHeight: '400px',
         position: "relative",
         background: (theme) => theme.palette.primary.dark,
         overflow: "hidden",
@@ -42,7 +43,7 @@ export const HeroCard = ({
             "& > img": {
               transform: "scale(1.1)",
             },
-            "&:nth-child(2)": {
+            "&:nth-of-type(2)": {
                 "&:before": {
                   transform: "translateY(calc(100% - 6px))",
                 },
@@ -58,13 +59,14 @@ export const HeroCard = ({
           display: "flex",
           justifyContent: "center",
           maxHeight: "60%",
+          height: '100%',
           zIndex: 3,
           overflow: "hidden",
           transition: "all .2s linear",
         }}
       >
         <img
-        //   src={`images/hero/${name.replace(" ", "-")}.jpg`}
+        alt={name}
         src={`images/random/random${randomNum}.jpg`}
           style={{
             objectFit: "cover",
