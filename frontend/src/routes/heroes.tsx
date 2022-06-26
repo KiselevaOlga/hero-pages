@@ -42,7 +42,7 @@ export const Heroes = () => {
   const onAddNewHero = async (hero: CreateHero) => {
     return await axios.post("/heroes", { ...hero }).then((res) => {
       if (res.data.id) {
-          setOpen(!open);
+        setOpen(!open);
         refetch({});
         setShowSnackBar("success");
       } else {
@@ -83,7 +83,7 @@ export const Heroes = () => {
               alignItems: "center",
               justifyContent: "center",
               p: 3,
-              flexWrap: "wrap"
+              flexWrap: "wrap",
             }}
           >
             <Typography variant="h6">
@@ -121,10 +121,10 @@ export const Heroes = () => {
           padding: 3,
           display: "grid",
           gap: 3,
-          gridTemplateColumns:{ 
+          gridTemplateColumns: {
             lg: "repeat(auto-fit,minmax(calc((100% - (24px * 5)) / 5),1fr))",
             sm: "repeat(3, 1fr)",
-          }
+          },
         }}
       >
         {isError && (
@@ -167,7 +167,10 @@ export const Heroes = () => {
             Please provide name, short description (1-2 sentences),
             description(longer and detailed) and power of your owm hero
           </DialogContentText>
-          <NewHeroForm onSubmit={onAddNewHero} onCancel={()=>setOpen(!open)} />
+          <NewHeroForm
+            onSubmit={onAddNewHero}
+            onCancel={() => setOpen(!open)}
+          />
         </DialogContent>
       </Dialog>
       <Snackbar
@@ -175,14 +178,15 @@ export const Heroes = () => {
         autoHideDuration={6000}
         onClose={() => setShowSnackBar(null)}
       >
-          <Alert
-            onClose={() => setShowSnackBar(null)}
-            severity={showSnackbar === 'success' ? 'success' : 'error'}
-            sx={{ width: "100%" }}
-          >
-            {showSnackbar === 'success' ? 'New super hero has been added!' : 'Something went wrong, please try again later!'}
-          </Alert>
-
+        <Alert
+          onClose={() => setShowSnackBar(null)}
+          severity={showSnackbar === "success" ? "success" : "error"}
+          sx={{ width: "100%" }}
+        >
+          {showSnackbar === "success"
+            ? "New super hero has been added!"
+            : "Something went wrong, please try again later!"}
+        </Alert>
       </Snackbar>
     </Box>
   );
