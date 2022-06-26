@@ -47,7 +47,10 @@ function App() {
       <Box>
         <Routes>
           <Route element={<Navigation isActive={!!user} />}>
-            <Route element={<LoginRequiredRoute userIsActive={!!user} />}>
+            <Route
+              path="/"
+              element={<LoginRequiredRoute userIsActive={!!user} />}
+            >
               <Route path="heroes" element={<Heroes />} />
               <Route path="heroes/:id" element={<Hero />} />
             </Route>
@@ -109,8 +112,28 @@ export const Navigation = ({ isActive }: NavigationProps): JSX.Element => {
       </AppBar>
       <Toolbar />
 
-      <Box component={"main"} sx={{height: 'calc(100vh - 60px)'}}>
+      <Box component={"main"} sx={{ 
+        minHeight: 'calc(100vh - (64px + 100px))',
+        display: 'flex',
+        flexDirection: 'column',
+        '& > *':{
+          flex: 1
+        }
+         }}>
         <Outlet />
+      </Box>
+      <Box
+        component={"footer"}
+        sx={{
+          height: 100,
+          width: "100%",
+          background: theme.palette.primary.main,
+          color: (theme) => theme.palette.primary.contrastText,
+        }}
+      >
+        <Typography variant="body1" align="center" sx={{padding: 3}}>
+          Coded by Olga Kiseleva
+        </Typography>
       </Box>
     </ThemeProvider>
   );

@@ -14,5 +14,14 @@ export const theme = createTheme({
       dark: '#64191C',
       contrastText: '#fff',
     },
+    success:{
+        main: '#24d12d'
+    },
+    info:{
+        main: '#2485D8'
+    },
+    warning:{
+        main: '#F5A62C'
+    }
   },
 });

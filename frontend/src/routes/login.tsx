@@ -4,12 +4,13 @@ import { theme } from "../theme";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { useEffect, useState } from "react";
 import { User } from "../App";
-import { FormTextField } from "../helpers/FormTextField";
+import { FormTextField } from "../components/FormTextField";
 
 interface LoginPageProps {
   onLogin: (loginValues: User) => Promise<void>;
 }
 export const Login = ({ onLogin }: LoginPageProps): JSX.Element => {
+    const [submitting, setSubmitting] = useState<boolean>(true)
   return (
     <Box
       sx={{
@@ -27,9 +28,12 @@ export const Login = ({ onLogin }: LoginPageProps): JSX.Element => {
           padding: 3,
           background: (theme) => theme.palette.primary.light,
           borderRadius: 3,
+          color: theme => theme.palette.primary.main
         }}
       >
-        <Typography variant="h3">Login</Typography>
+        <Typography variant="body1" align='center'>Hello There!</Typography>
+        <Typography variant="body1" align='center'>To use this application, please, login first</Typography>
+
         <Formik
           initialValues={{
             name: "",
@@ -39,6 +43,7 @@ export const Login = ({ onLogin }: LoginPageProps): JSX.Element => {
             onLogin(values);
             setSubmitting(false);
           }}
+          isSubmitting
         >
           <Form>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -62,7 +67,7 @@ export const Login = ({ onLogin }: LoginPageProps): JSX.Element => {
                   background: (theme) => theme.palette.secondary.main,
                   color: (theme) => theme.palette.secondary.contrastText,
                   '&:hover':{
-                    background: (theme) => theme.palette.secondary.light,
+                    background: (theme) => theme.palette.secondary.dark,
                   }
                 }}
               >
