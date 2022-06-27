@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, Dispatch, FC, SetStateAction, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface UserStored {

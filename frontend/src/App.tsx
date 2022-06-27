@@ -26,10 +26,12 @@ export const useCheckUser = () => {
     isLoading,
   };
 };
+
 export interface User {
   name: string;
   password: string;
 }
+
 function App() {
   const { loginUser, error } = useAuth();
   const { user, setUser, isLoading } = useFindUser();
@@ -37,7 +39,7 @@ function App() {
     <UserContext.Provider value={{ user, setUser, isLoading }}>
       <Box>
         <Routes>
-          <Route element={<Navigation isActive={!!user} />}>
+          <Route element={<Navigation />}>
             <Route
               path="/"
               element={<LoginRequiredRoute userIsActive={!!user} />}
@@ -75,7 +77,6 @@ type LoginRequiredRouteProps = {
 
 const LoginRequiredRoute: React.FC<LoginRequiredRouteProps> = (
   { userIsActive, redirectPath = "/login" },
-  children
 ) => {
   if (!userIsActive) {
    return <Navigate to={redirectPath} />;
@@ -83,26 +84,10 @@ const LoginRequiredRoute: React.FC<LoginRequiredRouteProps> = (
   return <Outlet />;
 };
 
-interface NavigationProps {
-  isActive: boolean;
-}
 
-export const Navigation = ({ isActive }: NavigationProps): JSX.Element => {
+export const Navigation = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
-      {/* <AppBar component={"nav"}>
-        <Toolbar sx={{ background: (theme) => theme.palette.primary.main }}>
-          {!isActive ? (
-            <Link to="/login">
-              <Typography variant="body1">Log In</Typography>
-            </Link>
-          ) : (
-            <Typography variant="body1">Welcome</Typography>
-          )}
-        </Toolbar>
-      </AppBar>
-      <Toolbar /> */}
-
       <Box component={"main"} sx={{ 
         minHeight: 'calc(100vh - (100px))',
         display: 'flex',
