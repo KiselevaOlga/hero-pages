@@ -1,9 +1,17 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import App from './App';
+import { MemoryRouter } from 'react-router-dom';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders login page', () => {
+    // Render app
+    render(
+      <MemoryRouter initialEntries={['/heroes']}>
+        <App />
+      </MemoryRouter>,
+    );
+    // find text for login page
+    const text = screen.getByText(/Hello There!/i)  
+    // Check that redirect path is working and instead of heroes page it shows login page
+    expect(text).toBeInTheDocument();
 });
